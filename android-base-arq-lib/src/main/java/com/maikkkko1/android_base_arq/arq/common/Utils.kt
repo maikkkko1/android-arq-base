@@ -1,7 +1,5 @@
 package com.maikkkko1.android_base_arq.arq.common
 
-import android.content.Context
-import com.maikkkko1.android_base_arq.R
 import java.text.NumberFormat
 import java.util.*
 

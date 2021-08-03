@@ -1,8 +1,14 @@
-package com.maikkkko1.android_base_arq.components.dialog
+package com.maikkkko1.android_base_arq.arq.components.dialog
 
 import android.content.Context
 import android.content.DialogInterface
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
+
+/**
+ * Created by Maikon Ferreira on 8/3/2021.
+ * me@maikonferreira.tech
+ */
 
 class CustomAlertDialog constructor(private val context: Context) {
     fun showSimpleDialog(

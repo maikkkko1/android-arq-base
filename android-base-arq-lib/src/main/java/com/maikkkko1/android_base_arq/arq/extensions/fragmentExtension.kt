@@ -19,10 +19,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.maikkkko1.android_base_arq.arq.base.BaseViewModel
 import com.maikkkko1.android_base_arq.arq.common.ComponentState
-import com.maikkkko1.android_base_arq.arq.common.Utils
 import com.maikkkko1.android_base_arq.arq.common.ViewCommand
 import com.maikkkko1.android_base_arq.arq.common.commandObserver
-import com.maikkkko1.android_base_arq.components.dialog.CustomAlertDialog
+import com.maikkkko1.android_base_arq.arq.components.dialog.CustomAlertDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
