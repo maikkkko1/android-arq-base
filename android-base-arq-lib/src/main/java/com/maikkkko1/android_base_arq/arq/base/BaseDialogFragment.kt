@@ -2,10 +2,12 @@ package com.maikkkko1.android_base_arq.arq.base
 
 import com.maikkkko1.android_base_arq.arq.extensions.navigateBack
 
-open class BaseDialogFragment(private val isTablet: Boolean = false) : BaseFragment() {
+open class BaseDialogFragment : BaseFragment() {
     var dialogDismissAction: (() -> Unit)? = null
 
+    var isTabletDialog = false
+
     protected fun handleBackButton() {
-        if (!isTablet) navigateBack() else dialogDismissAction?.invoke()
+        if (!isTabletDialog) navigateBack() else dialogDismissAction?.invoke()
     }
 }
