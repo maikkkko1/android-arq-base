@@ -1,0 +1,3 @@
+rootProject.name = "android-base-arq"
+include ':app'
+include ':android-base-arq'
