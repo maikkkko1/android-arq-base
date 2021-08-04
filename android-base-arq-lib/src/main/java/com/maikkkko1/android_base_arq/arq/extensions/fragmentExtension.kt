@@ -44,8 +44,7 @@ fun <T> Fragment.bindData(observable: LiveData<T>, block: (result: T) -> Unit) {
  * Called to observe any component state from your view model.
  */
 fun <T> Fragment.bindState(
-    observable: LiveData<ComponentState<T>>,
-    block: (result: ComponentState<T>) -> Unit
+    observable: LiveData<ComponentState<T>>, block: (result: ComponentState<T>) -> Unit
 ) = bindData(observable, block)
 
 /**
@@ -54,18 +53,37 @@ fun <T> Fragment.bindState(
 fun Fragment.bindCommand(viewModel: BaseViewModel, block: (result: ViewCommand) -> Unit) {
     lifecycleScope.launch {
         commandObserver(
-            lifecycle = this@bindCommand,
-            viewModel = viewModel,
-            block = block
+            lifecycle = this@bindCommand, viewModel = viewModel, block = block
         )
     }
 }
 
-fun Fragment.navigateBack() = findNavController().popBackStack().also { closeKeyboard() }
+fun Fragment.navigateBack(finishIfNoBackStack: Boolean = false) {
+    if (finishIfNoBackStack) {
+        if (findNavController().previousBackStackEntry == null) {
+            requireActivity().finish()
+        } else {
+            findNavController().popBackStack().also { closeKeyboard() }
+        }
+    } else {
+        findNavController().popBackStack().also { closeKeyboard() }
+    }
+}
 
-fun Fragment.navigateBackTo(destination: Int) = findNavController().popBackStack(destination, false).also { closeKeyboard() }
+fun Fragment.navigateBackTo(destination: Int, finishIfNoBackStack: Boolean = false) {
+    if (finishIfNoBackStack) {
+        if (findNavController().previousBackStackEntry == null) {
+            requireActivity().finish()
+        } else {
+            findNavController().popBackStack(destination, false).also { closeKeyboard() }
+        }
+    } else {
+        findNavController().popBackStack(destination, false).also { closeKeyboard() }
+    }
+}
 
-fun Fragment.navigateTo(destination: Int, bundle: Bundle? = null) = findNavController().navigateWithAnim(destination, bundle).also { closeKeyboard() }
+fun Fragment.navigateTo(destination: Int, bundle: Bundle? = null) =
+    findNavController().navigateWithAnim(destination, bundle).also { closeKeyboard() }
 
 fun Fragment.closeKeyboard() {
     val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -82,8 +100,7 @@ inline fun <reified T : Activity> Fragment.getContainerActivity(): T = (requireA
 
 fun Fragment.getRecyclerLayoutManager(tabletSpanCount: Int, isTablet: Boolean): GridLayoutManager? {
     return if (isTablet) GridLayoutManager(
-        requireContext(),
-        tabletSpanCount
+        requireContext(), tabletSpanCount
     ) else null
 }
 
@@ -91,15 +108,13 @@ fun Fragment.getResourcesColor(id: Int): Int = ContextCompat.getColor(requireCon
 
 fun Fragment.showIncorrectInfoDialog(text: String? = null) {
     getCustomAlertDialog().showSimpleDialog(
-        "Please check again",
-        text ?: "Incorrect information!"
+        "Please check again", text ?: "Incorrect information!"
     )
 }
 
 fun Fragment.showErrorDialog(text: String? = null) {
     getCustomAlertDialog().showSimpleDialog(
-        title = "Oops",
-        message = text ?: "Unexpected error!"
+        title = "Oops", message = text ?: "Unexpected error!"
     )
 }
 
