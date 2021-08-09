@@ -96,8 +96,6 @@ fun Fragment.navigateTo(destination: Int, bundle: Bundle? = null) {
             currentNode?.findNode(destinationId)?.let { findNavController().navigateWithAnim(destination, bundle) }
         }
     }
-
-    findNavController().navigateWithAnim(destination, bundle).also { closeKeyboard() }
 }
 
 fun Fragment.closeKeyboard() {
