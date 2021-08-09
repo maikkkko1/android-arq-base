@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -82,8 +83,22 @@ fun Fragment.navigateBackTo(destination: Int, finishIfNoBackStack: Boolean = fal
     }
 }
 
-fun Fragment.navigateTo(destination: Int, bundle: Bundle? = null) =
+fun Fragment.navigateTo(destination: Int, bundle: Bundle? = null) {
+    val destinationId = findNavController().currentDestination?.getAction(destination)?.destinationId ?: 0
+
+    findNavController().currentDestination?.let { node ->
+        val currentNode = when (node) {
+            is NavGraph -> node
+            else -> node.parent
+        }
+
+        if (destinationId != 0) {
+            currentNode?.findNode(destinationId)?.let { findNavController().navigateWithAnim(destination, bundle) }
+        }
+    }
+
     findNavController().navigateWithAnim(destination, bundle).also { closeKeyboard() }
+}
 
 fun Fragment.closeKeyboard() {
     val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
