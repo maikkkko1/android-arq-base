@@ -1,5 +1,6 @@
 package com.maikkkko1.android_base_arq.arq.functions
 
+import com.maikkkko1.android_base_arq.arq.extensions.pluralize
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -27,13 +28,7 @@ fun formatTimeTo12HourFormat(hour: Int): HashMap<String, Any> {
 
 fun getDaysList(): List<String> {
     return listOf(
-        "Sun",
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat"
+        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
     )
 }
 
@@ -81,6 +76,32 @@ fun formatTimeToShow(hour: Any, minute: Any, dayTime: Any? = null): String {
     return String.format("%d:%02d", hour, minute) + dayTime
 }
 
+fun getDifferenceBetweenDates(startDate: Date, endDate: Date): DifferenceBetweenDates {
+    var different: Long = endDate.time - startDate.time
+
+    val secondsInMilli: Long = 1000
+    val minutesInMilli = secondsInMilli * 60
+    val hoursInMilli = minutesInMilli * 60
+    val daysInMilli = hoursInMilli * 24
+
+    val elapsedDays = different / daysInMilli
+    different %= daysInMilli;
+
+    val elapsedHours = different / hoursInMilli
+    different %= hoursInMilli
+
+    val elapsedMinutes = different / minutesInMilli
+    different %= minutesInMilli
+
+    return DifferenceBetweenDates(
+        days = elapsedDays.toInt(), hours = elapsedHours.toInt(), minutes = elapsedMinutes.toInt()
+    )
+}
+
+/*
+Deprecated, use getDifferenceBetweenDates instead.
+ */
+@Deprecated(message = "Deprecated", level = DeprecationLevel.WARNING)
 fun getDiffBetweenTwoDates(startDate: Date, endDate: Date): HashMap<String, Long> {
     var different: Long = endDate.time - startDate.time
 
@@ -103,4 +124,12 @@ fun getDiffBetweenTwoDates(startDate: Date, endDate: Date): HashMap<String, Long
         put("hours", elapsedHours)
         put("minutes", elapsedMinutes)
     }
+}
+
+data class DifferenceBetweenDates(
+    val days: Int, val hours: Int, val minutes: Int
+) {
+    fun getDaysAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && days == 0) "" else "$days" + "day".pluralize(days)
+    fun getHoursAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && hours == 0) "" else "$hours" + "hour".pluralize(days)
+    fun getMinutesAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && minutes == 0) "" else "$minutes" + "minute".pluralize(days)
 }
