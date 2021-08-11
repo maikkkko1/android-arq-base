@@ -129,7 +129,7 @@ fun getDiffBetweenTwoDates(startDate: Date, endDate: Date): HashMap<String, Long
 data class DifferenceBetweenDates(
     val days: Int, val hours: Int, val minutes: Int
 ) {
-    fun getDaysAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && days == 0) "" else "$days" + "day".pluralize(days)
-    fun getHoursAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && hours == 0) "" else "$hours" + "hour".pluralize(days)
-    fun getMinutesAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && minutes == 0) "" else "$minutes" + "minute".pluralize(days)
+    fun getDaysAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && days == 0) "" else "$days" + " day".pluralize(days)
+    fun getHoursAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && hours == 0) "" else "$hours" + " hour".pluralize(days)
+    fun getMinutesAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && minutes == 0) "" else "$minutes" + " minute".pluralize(days)
 }
