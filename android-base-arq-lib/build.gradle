@@ -17,6 +17,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -38,6 +39,14 @@ android {
 }
 
 dependencies {
+    /** Multidex */
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    /** Parse **/
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:1.21.0"
+    implementation "com.github.parse-community.Parse-SDK-Android:ktx:1.21.0"
+    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
+
     /** Joda **/
     implementation "joda-time:joda-time:2.10"
 
