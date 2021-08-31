@@ -94,7 +94,10 @@ fun getDifferenceBetweenDates(startDate: Date, endDate: Date): DifferenceBetween
     different %= minutesInMilli
 
     return DifferenceBetweenDates(
-        days = elapsedDays.toInt(), hours = elapsedHours.toInt(), minutes = elapsedMinutes.toInt()
+        days = elapsedDays.toInt(),
+        hours = elapsedHours.toInt(),
+        minutes = elapsedMinutes.toInt(),
+        seconds = (different / secondsInMilli).toInt(),
     )
 }
 
@@ -127,9 +130,13 @@ fun getDiffBetweenTwoDates(startDate: Date, endDate: Date): HashMap<String, Long
 }
 
 data class DifferenceBetweenDates(
-    val days: Int, val hours: Int, val minutes: Int
+    val days: Int,
+    val hours: Int,
+    val minutes: Int,
+    val seconds: Int
 ) {
     fun getDaysAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && days == 0) "" else "$days" + " day".pluralize(days)
-    fun getHoursAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && hours == 0) "" else "$hours" + " hour".pluralize(days)
-    fun getMinutesAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && minutes == 0) "" else "$minutes" + " minute".pluralize(days)
+    fun getHoursAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && hours == 0) "" else "$hours" + " hour".pluralize(hours)
+    fun getMinutesAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && minutes == 0) "" else "$minutes" + " minute".pluralize(minutes)
+    fun getSecondsAsString(emptyIfZero: Boolean = false): String = if (emptyIfZero && seconds == 0) "" else "$seconds" + " second".pluralize(seconds)
 }
